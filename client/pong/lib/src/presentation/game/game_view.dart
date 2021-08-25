@@ -86,48 +86,6 @@ class GameView extends StatelessWidget {
                   );
                 },
               ),
-
-              // Top
-              /*BlocBuilder<PlayerCubit, models.Player>(
-                buildWhen: (p, c) => p != c,
-                builder: (context, state) {
-                  return Container(
-                    alignment: Alignment(state.x, state.y - .2),
-                    child: Container(
-                      color: Colors.white,
-                      width: paddleWidth,
-                      height: 2,
-                    ),
-                  );
-                },
-              ),
-
-              Container(
-                alignment: Alignment(.9, .2),
-                child: Container(
-                  color: Colors.white,
-                  width: paddleWidth,
-                  height: 2,
-                ),
-              ),*/
-              BlocBuilder<PlayerCubit, models.Player>(
-                buildWhen: (p, c) => p != c,
-                builder: (context, state) {
-                  final y = (2 * state.y + .1) / (2 - .1);
-                  print('paddleHeight: $paddleHeight');
-                  print(state);
-                  print('Y: $y');
-                  return Align(
-                    //alignment: Alignment(state.x, y),
-                    alignment: FractionalOffset(.95, 1),
-                    child: Container(
-                      color: Colors.white,
-                      width: paddleWidth,
-                      height: 2,
-                    ),
-                  );
-                },
-              ),
             ],
           ),
         ),

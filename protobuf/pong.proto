@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package pong.v1;
+option go_package = "/pb";
+//import "google/protobuf/timestamp.proto";
+
+
+
+// Interface exported by the server.
+service GameService {
+    rpc Connect (ConnectRequest) returns (ConnectResponse) {}
+    // A Bidirectional streaming RPC.
+    rpc Stream(stream StreamRequest) returns (stream StreamResponse) {}
+
+}
+message ConnectRequest {
+    string id = 1;
+ }
+  
+ message ConnectResponse {
+    string client_id = 1;
+    repeated Entity entities = 2;
+ }
+
+//  Coordinate structs holds 2D vector with coordinates.
+message Coordinate {
+    double x = 1;
+    double y = 2;
+}
+
+// Paddle direction
+enum Direction {
+    DIRECTION_NONE = 0;
+    DIRECTION_UP = 1;
+    DIRECTION_DOWN = 2;
+    DIRECTION_LEFT = 3;
+    DIRECTION_RIGHT = 4;
+}
+
+message GameRequest {
+    Direction direction = 1;
+}
+
+message Player {
+    string    id = 1;
+    Coordinate     position = 2;
+}
+
+message Ball {
+    string    id = 1;
+    Coordinate     position = 2;
+
+}
+
+message Entity {
+    oneof entity {
+        Player player = 2;
+        Ball ball = 3;
+    }
+}
+
+message Move {
+    Direction direction = 1;
+}
+message AddEntity {
+    Entity entity = 1;
+}
+message UpdateEntity {
+    Entity entity = 1;
+}
+
+message StreamRequest {
+    oneof action {
+        Move move = 1;
+    }
+}
+
+message StreamResponse {
+    oneof action {
+        AddEntity add_entity = 1;
+        UpdateEntity update_entity = 2;
+    }
+}
